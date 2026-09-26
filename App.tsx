@@ -13,16 +13,16 @@ import { Product, CartItem, Order } from './types';
 const INITIAL_PRODUCTS: Product[] = [
   { 
     id: 'tee-01',
-    title: 'CLASSIC WHITE TEE', 
+    title: 'CLASSIC GREY TEE', 
     price: '$22.00', 
     category: 'Essentials', 
-    description: 'Perfect white flat-lay t-shirt. Ideal for AI Try-On.',
+    description: 'Perfect grey flat-lay t-shirt. Ideal for AI Try-On.',
     images: [
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80'
+      '/image3.jfif',
+      '/image3.jfif',
+      '/image3.jfif'
     ],
-    colors: ['White'],
+    colors: ['Grey'],
     sizes: ['S', 'M', 'L']
   },
   { 
