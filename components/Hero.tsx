@@ -134,7 +134,7 @@ export const Hero: React.FC = () => {
             <div className="relative glass p-2 rounded-2xl shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] overflow-hidden">
               <div className="relative overflow-hidden rounded-xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=1200&q=80" 
+                  src="/image3.jfif" 
                   alt="High Tech Streetwear" 
                   className="w-full h-100 sm:h-150 object-cover contrast-125 brightness-110 grayscale hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105"
                 />
@@ -154,9 +154,9 @@ export const Hero: React.FC = () => {
                     <div className="flex justify-between items-end">
                       <div className="space-y-1">
                         <span className="text-[9px] font-bold text-rose-500 uppercase tracking-[0.3em]">Asset Protocol</span>
-                        <h4 className="text-xl font-black italic uppercase text-white tracking-tighter">HEAVY HOODIE 04</h4>
+                        <h4 className="text-xl font-black italic uppercase text-white tracking-tighter">ESSENTIAL TEE 01</h4>
                       </div>
-                      <span className="text-sm font-mono text-white opacity-60">$120.00</span>
+                      <span className="text-sm font-mono text-white opacity-60">$22.00</span>
                     </div>
                   </div>
                 </div>
