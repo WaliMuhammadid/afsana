@@ -55,30 +55,30 @@ const INITIAL_PRODUCTS: Product[] = [
   },
   { 
     id: 'jacket-01',
-    title: 'CUSTOM JACKET 1', 
-    price: '$120.00', 
-    category: 'Outerwear', 
-    description: 'Custom uploaded jacket for AI Try-On.',
+    title: 'KIKU LUCKY CAT GRAPHIC TEE', 
+    price: '$35.00', 
+    category: 'T-Shirts', 
+    description: 'Dark grey graphic t-shirt featuring a Japanese Lucky Cat (Maneki-neko) design.',
     images: [
       '/image1.jfif',
       '/image1.jfif',
       '/image1.jfif'
     ],
-    colors: ['Custom'],
+    colors: ['Dark Grey'],
     sizes: ['S', 'M', 'L']
   },
   { 
     id: 'jacket-02',
-    title: 'CUSTOM JACKET 2', 
-    price: '$85.00', 
-    category: 'Outerwear', 
-    description: 'Second custom uploaded jacket.',
+    title: 'KIKU GOOD FORTUNE TANUKI TEE', 
+    price: '$35.00', 
+    category: 'T-Shirts', 
+    description: 'Olive green graphic t-shirt featuring a Tanuki and "Good Fortune" text.',
     images: [
       '/image2.jfif',
       '/image2.jfif',
       '/image2.jfif'
     ],
-    colors: ['Custom'],
+    colors: ['Olive Green'],
     sizes: ['S', 'M', 'L', 'XL']
   }
 ];
