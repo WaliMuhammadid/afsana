@@ -221,81 +221,43 @@ const getBase64FromUrl = async (url: string): Promise<string> => {
  * 3. Tier 3: Fall back to high-fidelity local Canvas holographic/AR mapping synthesis.
  */
 export const virtualTryOn = async (userImageBase64: string, productImageUrl: string, productTitle: string, size: string = 'M'): Promise<string> => {
-  // Tier 1: Fal.ai IDM-VTON
-  const hasFalKey = typeof process !== 'undefined' && process.env?.FAL_KEY;
-  if (hasFalKey) {
-    try {
-      console.log("Initiating Tier 1 Virtual Try-On (Fal.ai IDM-VTON)...");
-      return await executeFalVto({
-        humanImage: userImageBase64,
-        garmentImage: productImageUrl,
-        description: `${productTitle} in size ${size}`
-      });
-    } catch (falError) {
-      console.warn("Fal.ai synthesis failed, falling back to Gemini:", falError);
-    }
-  }
-
-  // Tier 2: Gemini multimodal generation
   try {
-    console.log("Initiating Tier 2 Virtual Try-On (Gemini API)...");
-    const ai = getAI();
+    console.log("Initiating VTRO Try-On from Kaggle API...");
     
-    // Clean user image base64
-    const userData = userImageBase64.includes(',') ? userImageBase64.split(',')[1] : userImageBase64;
+    // 1. User ki photo (Base64) aur Product Image (URL) ko Blob (File) mein convert karna
+    const resHuman = await fetch(userImageBase64);
+    const blobHuman = await resHuman.blob();
     
-    // Fetch product base64
-    const productData = await getBase64FromUrl(productImageUrl);
-
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-image',
-      contents: {
-        parts: [
-          {
-            inlineData: {
-              data: userData,
-              mimeType: 'image/jpeg',
-            },
-          },
-          {
-            inlineData: {
-              data: productData,
-              mimeType: 'image/jpeg',
-            },
-          },
-          {
-            text: `VIRTUAL TRY-ON MISSION:
-            1. Target Subject: The person in the first image.
-            2. Target Garment: The clothing item in the second image (${productTitle}) with size ${size}.
-            3. Instruction: Synthesize a photorealistic image where the subject from image 1 is wearing the garment from image 2 in size ${size}.
-            4. Sizing Drape: Style the garment's fit based on size "${size}". If it is a smaller size, it should drape snugger and slightly shorter. If it is a larger/oversized size, allow it to drape looser with lowered shoulders and longer arms.
-            5. Preservation: Maintain the subject's face, body type, hair, and the exact background environment.
-            6. Realism: Ensure the fabric drapes naturally, respecting shadows and lighting of the first image.
-            Return only the synthesized image.`,
-          },
-        ],
-      },
+    const resGarment = await fetch(productImageUrl);
+    const blobGarment = await resGarment.blob();
+    
+    // 2. FormData banana taake File upload ho sake
+    const formData = new FormData();
+    formData.append("person_image", blobHuman, "person.jpg");
+    formData.append("garment_image", blobGarment, "garment.jpg");
+    
+    // 👇 YAHAN APNA KAGGLE WALA LINK DAALEIN (Jo 'loca.lt' wala hoga)
+    const KAGGLE_API_URL = "https://olympics-associations-comments-northeast.trycloudflare.com/try-on"; 
+    
+    // 3. Kaggle API ko request bhejna
+    const response = await fetch(KAGGLE_API_URL, {
+      method: 'POST',
+      body: formData
     });
-
-    const candidate = response.candidates?.[0];
-    if (candidate?.content?.parts) {
-      for (const part of candidate.content.parts) {
-        if (part.inlineData) {
-          return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
-        }
-      }
+    
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("KAGGLE API ERROR:", errText);
+      throw new Error(`API failed with status: ${response.status} - ${errText}`);
     }
     
-    throw new Error("Gemini synthesis returned no image inlineData.");
-  } catch (geminiError) {
-    console.warn("Gemini synthesis failed, deploying Tier 3 local holographic fallback...", geminiError);
-    // Tier 3: Local Canvas Hologram Overlay Fallback
-    try {
-      return await synthesizeClientSideVto(userImageBase64, productImageUrl, productTitle, size);
-    } catch (fallbackError) {
-      console.error("Local fallback synthesis also failed:", fallbackError);
-      throw fallbackError;
-    }
+    // 4. Result image (Blob) ko URL mein convert karke wapas bhejna
+    const resultBlob = await response.blob();
+    return URL.createObjectURL(resultBlob);
+    
+  } catch (error) {
+    console.error("VTRO Kaggle API Error:", error);
+    throw error;
   }
 };
 

@@ -12,88 +12,74 @@ import { Product, CartItem, Order } from './types';
 
 const INITIAL_PRODUCTS: Product[] = [
   { 
-    id: 'hoodie-01',
-    title: 'HEAVYWEIGHT HOODIE', 
-    price: '$120.00', 
-    category: 'Outerwear', 
-    description: '450 GSM organic cotton, reverse-weave construction, and a double-layered hood.',
-    images: [
-      'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?auto=format&fit=crop&w=1200&q=80'
-    ],
-    colors: ['Obsidian', 'Bone', 'Rose'],
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  { 
     id: 'tee-01',
-    title: 'DROP-SHOULDER TEE', 
-    price: '$55.00', 
+    title: 'CLASSIC WHITE TEE', 
+    price: '$22.00', 
     category: 'Essentials', 
-    description: 'The ultimate base layer. Featuring a boxy drop-shoulder cut.',
+    description: 'Perfect white flat-lay t-shirt. Ideal for AI Try-On.',
     images: [
-      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1200&q=80'
+      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80'
     ],
-    colors: ['Stone', 'Midnight'],
-    sizes: ['M', 'L', 'XL', 'XXL']
+    colors: ['White'],
+    sizes: ['S', 'M', 'L']
   },
   { 
-    id: 'polo-01',
-    title: 'TECHNICAL POLO', 
-    price: '$95.00', 
-    category: 'Smart Casual', 
-    description: 'Technical knit polo with moisture-wicking properties.',
+    id: 'tee-02',
+    title: 'ONYX BLACK TEE', 
+    price: '$25.00', 
+    category: 'Essentials', 
+    description: 'Black flat lay t-shirt with clear wrinkles.',
     images: [
-      'https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1578932750294-f5075e85f44a?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=1200&q=80'
+      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80'
     ],
-    colors: ['Graphite', 'Navy'],
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  { 
-    id: 'jacket-01',
-    title: 'TACTICAL BOMBER', 
-    price: '$210.00', 
-    category: 'Outerwear', 
-    description: 'Water-resistant nylon with modular pocket systems.',
-    images: [
-      'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1495001258031-d1b407bc1776?auto=format&fit=crop&w=1200&q=80'
-    ],
-    colors: ['Olive', 'Onyx'],
+    colors: ['Black'],
     sizes: ['M', 'L', 'XL']
   },
   { 
-    id: 'pant-01',
-    title: 'BRUTALIST CARGO', 
-    price: '$145.00', 
-    category: 'Streetwear', 
-    description: 'Heavyweight twill with asymmetrical storage.',
+    id: 'shirt-01',
+    title: 'WHITE LONG SLEEVE', 
+    price: '$35.00', 
+    category: 'Casual', 
+    description: 'White long sleeve shirt on white background.',
     images: [
-      'https://images.unsplash.com/photo-1517441167990-bc84990d04b6?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1542272454315-4c01d7abdf4a?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=1200&q=80'
+      'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80'
     ],
-    colors: ['Khaki', 'Black'],
-    sizes: ['30', '32', '34', '36']
+    colors: ['White'],
+    sizes: ['M', 'L']
   },
   { 
-    id: 'knit-01',
-    title: 'RIBBED OVERSIZE KNIT', 
-    price: '$130.00', 
-    category: 'Essentials', 
-    description: 'Wool-blend oversized sweater for architectural layering.',
+    id: 'jacket-01',
+    title: 'CUSTOM JACKET 1', 
+    price: '$120.00', 
+    category: 'Outerwear', 
+    description: 'Custom uploaded jacket for AI Try-On.',
     images: [
-      'https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1516762689617-e1cffcef479d?auto=format&fit=crop&w=1200&q=80'
+      '/image1.jfif',
+      '/image1.jfif',
+      '/image1.jfif'
     ],
-    colors: ['Cream', 'Slate'],
+    colors: ['Custom'],
     sizes: ['S', 'M', 'L']
+  },
+  { 
+    id: 'jacket-02',
+    title: 'CUSTOM JACKET 2', 
+    price: '$85.00', 
+    category: 'Outerwear', 
+    description: 'Second custom uploaded jacket.',
+    images: [
+      '/image2.jfif',
+      '/image2.jfif',
+      '/image2.jfif'
+    ],
+    colors: ['Custom'],
+    sizes: ['S', 'M', 'L', 'XL']
   }
 ];
 
