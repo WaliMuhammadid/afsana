@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProductPage } from './components/ProductPage';
-import { CommandCenter } from './components/CommandCenter';
 import { CartPage } from './components/CartPage';
 import { CheckoutPage } from './components/CheckoutPage';
 import { WebGLBackground } from './components/WebGLBackground';
@@ -24,34 +23,6 @@ const INITIAL_PRODUCTS: Product[] = [
     ],
     colors: ['Grey'],
     sizes: ['S', 'M', 'L']
-  },
-  { 
-    id: 'tee-02',
-    title: 'ONYX BLACK TEE', 
-    price: '$25.00', 
-    category: 'Essentials', 
-    description: 'Black flat lay t-shirt with clear wrinkles.',
-    images: [
-      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80'
-    ],
-    colors: ['Black'],
-    sizes: ['M', 'L', 'XL']
-  },
-  { 
-    id: 'shirt-01',
-    title: 'WHITE LONG SLEEVE', 
-    price: '$35.00', 
-    category: 'Casual', 
-    description: 'White long sleeve shirt on white background.',
-    images: [
-      'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80'
-    ],
-    colors: ['White'],
-    sizes: ['M', 'L']
   },
   { 
     id: 'jacket-01',
@@ -80,11 +51,61 @@ const INITIAL_PRODUCTS: Product[] = [
     ],
     colors: ['Olive Green'],
     sizes: ['S', 'M', 'L', 'XL']
+  },
+  { 
+    id: 'tee-04',
+    title: 'NEW ARRIVAL TEE 4', 
+    price: '$28.00', 
+    category: 'T-Shirts', 
+    description: 'A premium new addition to the AFSANA collection.',
+    images: ['/image4.jfif', '/image4.jfif', '/image4.jfif'],
+    colors: ['Mixed'],
+    sizes: ['S', 'M', 'L', 'XL']
+  },
+  { 
+    id: 'tee-05',
+    title: 'NEW ARRIVAL TEE 5', 
+    price: '$28.00', 
+    category: 'T-Shirts', 
+    description: 'A premium new addition to the AFSANA collection.',
+    images: ['/image5.jfif', '/image5.jfif', '/image5.jfif'],
+    colors: ['Mixed'],
+    sizes: ['S', 'M', 'L', 'XL']
+  },
+  { 
+    id: 'tee-06',
+    title: 'NEW ARRIVAL TEE 6', 
+    price: '$28.00', 
+    category: 'T-Shirts', 
+    description: 'A premium new addition to the AFSANA collection.',
+    images: ['/image6.jfif', '/image6.jfif', '/image6.jfif'],
+    colors: ['Mixed'],
+    sizes: ['S', 'M', 'L', 'XL']
+  },
+  { 
+    id: 'tee-07',
+    title: 'NEW ARRIVAL TEE 7', 
+    price: '$28.00', 
+    category: 'T-Shirts', 
+    description: 'A premium new addition to the AFSANA collection.',
+    images: ['/image7.jfif', '/image7.jfif', '/image7.jfif'],
+    colors: ['Mixed'],
+    sizes: ['S', 'M', 'L', 'XL']
+  },
+  { 
+    id: 'tee-08',
+    title: 'NEW ARRIVAL TEE 8', 
+    price: '$28.00', 
+    category: 'T-Shirts', 
+    description: 'A premium new addition to the AFSANA collection.',
+    images: ['/image8.jfif', '/image8.jfif', '/image8.jfif'],
+    colors: ['Mixed'],
+    sizes: ['S', 'M', 'L', 'XL']
   }
 ];
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'store' | 'product' | 'command' | 'cart' | 'checkout'>('store');
+  const [view, setView] = useState<'store' | 'product' | 'cart' | 'checkout'>('store');
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     try {
       return (localStorage.getItem('theme') as 'light' | 'dark') || 'dark';
@@ -130,7 +151,9 @@ const App: React.FC = () => {
     setCart(prev => prev.map(item => {
       if (item.product.id === id && item.selectedSize === size) {
         const next = item.quantity + delta;
-        return { ...item, quantity: Math.max(1, next) };
+        // Fix for Problem #4: Don't allow less than 1 quantity
+        if (next < 1) return item;
+        return { ...item, quantity: next };
       }
       return item;
     }));
@@ -169,28 +192,17 @@ const App: React.FC = () => {
     <div className={`min-h-screen transition-colors duration-500 ${theme === 'dark' ? 'dark' : 'light'} bg-slate-50 dark:bg-slate-950 text-slate-950 dark:text-white selection:bg-rose-500 selection:text-white`}>
       <WebGLBackground scrollY={globalScrollY} theme={theme} />
 
-      {view !== 'command' && view !== 'checkout' && (
-        <Navbar 
-          onHome={() => { setView('store'); setSelectedProduct(null); }} 
-          onEnterCommand={() => setView('command')}
-          onOpenCart={() => setView('cart')}
-          cartCount={cartCount}
-          theme={theme}
-          onToggleTheme={toggleTheme}
-        />
-      )}
+      <Navbar 
+        onHome={() => { setView('store'); setSelectedProduct(null); }} 
+        onEnterCommand={() => {}}
+        onOpenCart={() => setView('cart')}
+        cartCount={cartCount}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
       <main className="relative z-10">
-        {view === 'command' ? (
-          <CommandCenter 
-            products={products} 
-            orders={orders} 
-            onAddProduct={(p) => setProducts([p, ...products])} 
-            onEditProduct={(updated) => setProducts(products.map(p => p.id === updated.id ? updated : p))}
-            onUpdateOrderStatus={(id, status) => setOrders(orders.map(o => o.id === id ? { ...o, status } : o))}
-            onExit={() => setView('store')} 
-          />
-        ) : view === 'cart' ? (
+        {view === 'cart' ? (
           <CartPage 
             items={cart} 
             onUpdateQuantity={updateQuantity} 
@@ -246,6 +258,58 @@ const App: React.FC = () => {
                 ))}
               </div>
             </section>
+            <section id="contact" className="py-16 md:py-32 px-4 sm:px-6 max-w-7xl mx-auto relative border-t border-slate-200 dark:border-white/5 mt-16 md:mt-32">
+              <div className="flex flex-col md:flex-row gap-12 lg:gap-24">
+                <div className="flex-1 reveal-up">
+                  <p className="text-rose-500 font-black text-[10px] tracking-[0.4em] mb-4 uppercase">Direct Link</p>
+                  <h2 className="text-3xl md:text-6xl font-black italic tracking-tighter mb-6 uppercase leading-none">Initiate Contact</h2>
+                  <p className="text-slate-500 dark:text-slate-400 text-base md:text-lg font-light leading-relaxed mb-8">
+                    Have questions about the technical atelier or need support with your order? Our team is available 24/7.
+                  </p>
+                  
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-slate-950 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Email</p>
+                        <p className="text-sm font-bold mt-1">support@afsana.tech</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center">
+                        <svg className="w-5 h-5 text-slate-950 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Location</p>
+                        <p className="text-sm font-bold mt-1">Cyber City, Neo Tokyo</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex-1 glass p-8 sm:p-10 rounded-2xl border-rose-500/10 shadow-xl reveal-up">
+                  <form className="flex flex-col gap-6" onSubmit={(e) => { e.preventDefault(); alert('Transmission Sent. We will contact you shortly.'); }}>
+                    <div>
+                      <label className="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">Subject Name</label>
+                      <input type="text" required className="w-full bg-slate-100 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-500 transition-colors" placeholder="ENTER NAME" />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">Comms Channel (Email)</label>
+                      <input type="email" required className="w-full bg-slate-100 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-500 transition-colors" placeholder="ENTER EMAIL" />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2">Transmission Data</label>
+                      <textarea required rows={4} className="w-full bg-slate-100 dark:bg-black/50 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-500 transition-colors resize-none" placeholder="ENTER MESSAGE..."></textarea>
+                    </div>
+                    <button type="submit" className="w-full bg-rose-600 text-white font-black uppercase tracking-widest text-xs py-4 rounded-xl hover:bg-rose-700 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-rose-600/20 mt-2">
+                      Transmit Message
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </section>
           </>
         )}
       </main>
@@ -256,9 +320,7 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {view !== 'command' && view !== 'checkout' && (
-        <Footer onEnterCommand={() => setView('command')} />
-      )}
+      <Footer />
     </div>
   );
 };

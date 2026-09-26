@@ -2,11 +2,9 @@
 import { NavItem } from './types';
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: 'Shop All', href: '#shop' },
-  { label: 'Hoodies', href: '#hoodies' },
-  { label: 'Tees', href: '#tees' },
-  { label: 'Drop Shoulder', href: '#dropshoulder' },
-  { label: 'Polos', href: '#polos' },
+  { label: 'Home', href: '#' },
+  { label: 'Shop', href: '#shop' },
+  { label: 'Contact Us', href: '#contact' }
 ];
 
 export const INITIAL_HERO = {

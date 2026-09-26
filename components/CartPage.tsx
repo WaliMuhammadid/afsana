@@ -58,7 +58,7 @@ export const CartPage: React.FC<CartPageProps> = ({ items, onUpdateQuantity, onR
                         <span className="text-xs font-mono w-4 text-center">{item.quantity}</span>
                         <button onClick={() => onUpdateQuantity(item.product.id, item.selectedSize, 1)} className="text-slate-400 hover:text-white">+</button>
                       </div>
-                      <p className="font-mono text-sm">{item.product.price}</p>
+                      <p className="font-mono text-sm">${(parseFloat(item.product.price.replace('$', '')) * item.quantity).toFixed(2)}</p>
                     </div>
                   </div>
                 </div>

@@ -104,15 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onHome, onEnterCommand, onOpenCa
                 {item.label}
               </a>
             ))}
-            <div className="mt-10 pt-10 border-t border-white/10">
-              <button 
-                onClick={onEnterCommand}
-                className="w-full py-4 glass border-white/10 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-rose-500 hover:text-white transition-all"
-              >
-                Terminal Login
-              </button>
             </div>
-          </div>
         </div>
       </div>
     </nav>

@@ -63,14 +63,6 @@ export const Footer: React.FC<FooterProps> = ({ onEnterCommand }) => {
                 <li><a href="#" className="text-sm text-slate-400 hover:text-white transition-colors">The Manifesto</a></li>
                 <li><a href="#" className="text-sm text-slate-400 hover:text-white transition-colors">Sizing Matrix</a></li>
                 <li><a href="#" className="text-sm text-slate-400 hover:text-white transition-colors">Logistics Track</a></li>
-                <li>
-                  <button 
-                    onClick={onEnterCommand}
-                    className="text-sm text-slate-400 hover:text-rose-500 transition-colors uppercase font-bold tracking-widest"
-                  >
-                    Terminal Login
-                  </button>
-                </li>
               </ul>
             </div>
 

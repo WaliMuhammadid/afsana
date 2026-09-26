@@ -1,6 +1,5 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { executeFalVto } from "./falService";
 
 /**
  * Helper to initialize the Gemini API client.
@@ -155,7 +154,7 @@ export const generateHeroHook = async (theme: string): Promise<{ headline: strin
   try {
     const ai = getAI();
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: `Generate a high-end streetwear fashion slogan and a short 2-sentence description for a premium apparel brand. The collection features hoodies, tees, and technical wear. Theme: "${theme}". Tone: Edgy, minimalist, luxury.`,
       config: {
         responseMimeType: "application/json",
@@ -236,8 +235,8 @@ export const virtualTryOn = async (userImageBase64: string, productImageUrl: str
     formData.append("person_image", blobHuman, "person.jpg");
     formData.append("garment_image", blobGarment, "garment.jpg");
     
-    // 👇 YAHAN APNA KAGGLE WALA LINK DAALEIN (Jo 'loca.lt' wala hoga)
-    const KAGGLE_API_URL = "https://olympics-associations-comments-northeast.trycloudflare.com/try-on"; 
+    // 👇 YAHAN APNA KAGGLE WALA LINK DAALEIN
+    const KAGGLE_API_URL = "https://array-boston-classical-pirates.trycloudflare.com/try-on"; 
     
     // 3. Kaggle API ko request bhejna
     const response = await fetch(KAGGLE_API_URL, {
@@ -284,7 +283,7 @@ export const getAiFitAnalysis = async (
   try {
     const ai = getAI();
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: `You are AFSANA's Smart Biometric Fit AI.
 Analyze the fit of "${productTitle}" (Category: "${category}", available sizes: ${JSON.stringify(availableSizes)}) for a person who is:
 - Height: ${heightCm} cm

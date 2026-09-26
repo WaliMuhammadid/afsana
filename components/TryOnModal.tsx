@@ -10,7 +10,7 @@ interface TryOnModalProps {
 }
 
 export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose }) => {
-  const [step, setStep] = useState<'mode' | 'camera' | 'upload' | 'processing' | 'result'>('mode');
+  const [step, setStep] = useState<'mode' | 'camera' | 'upload' | 'processing' | 'result' | 'error'>('mode');
   const [userImage, setUserImage] = useState<string | null>(null);
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const [tryOnSize, setTryOnSize] = useState<string>(product.sizes[0] || 'M');
@@ -89,14 +89,10 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose }) => {
       const result = await virtualTryOn(userImage, product.images[selectedVariantIndex], product.title, tryOnSize);
       setResultImage(result);
       setStep('result');
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      try {
-        alert("Synthesis Protocol Failed. Please try again with a clearer photo.");
-      } catch (e) {
-        console.warn("Synthesis Protocol Failed. Please try again with a clearer photo.");
-      }
-      setStep('mode');
+      setStatusMessage(err.message || "Synthesis Protocol Failed. Please check the API connection or try again.");
+      setStep('error');
     }
   };
 
@@ -249,6 +245,30 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose }) => {
               </div>
               <h4 className="text-3xl font-black italic uppercase tracking-tighter mb-4 text-slate-950 dark:text-white animate-pulse">{statusMessage}</h4>
               <p className="text-rose-500 text-[10px] font-bold uppercase tracking-[0.4em]">Processing multi-modal vectors...</p>
+            </div>
+          )}
+
+          {step === 'error' && (
+            <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-center">
+              <div className="w-24 h-24 rounded-full bg-rose-500/20 flex items-center justify-center mb-8">
+                <svg className="w-12 h-12 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </div>
+              <h4 className="text-3xl font-black italic uppercase tracking-tighter mb-4 text-rose-500">Protocol Failed</h4>
+              <p className="text-slate-500 dark:text-slate-400 font-light mb-8 max-w-md">{statusMessage}</p>
+              <div className="flex gap-4">
+                <button 
+                  onClick={() => setStep('upload')}
+                  className="px-8 py-4 bg-white text-black font-black uppercase tracking-widest text-[10px] hover:bg-rose-600 hover:text-white transition-all rounded-sm"
+                >
+                  Retry Synthesis
+                </button>
+                <button 
+                  onClick={onClose}
+                  className="px-8 py-4 glass border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 font-black uppercase tracking-widest text-[10px] hover:text-slate-950 dark:hover:text-white transition-all rounded-sm"
+                >
+                  Abort
+                </button>
+              </div>
             </div>
           )}
 
