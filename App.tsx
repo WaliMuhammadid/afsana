@@ -13,7 +13,7 @@ import { Product, CartItem, Order } from './types';
 const INITIAL_PRODUCTS: Product[] = [
   { 
     id: 'tee-01',
-    title: 'CLASSIC GREY TEE', 
+    title: 'KIKU PLAIN GREY TEE', 
     price: '$22.00', 
     category: 'Essentials', 
     description: 'Perfect grey flat-lay t-shirt. Ideal for AI Try-On.',
