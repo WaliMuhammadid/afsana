@@ -236,12 +236,15 @@ export const virtualTryOn = async (userImageBase64: string, productImageUrl: str
     formData.append("garment_image", blobGarment, "garment.jpg");
     
     // 👇 YAHAN APNA KAGGLE WALA LINK DAALEIN
-    const KAGGLE_API_URL = "https://array-boston-classical-pirates.trycloudflare.com/try-on"; 
+    const KAGGLE_API_URL = "https://orbit-ion-describing-seafood.trycloudflare.com/try-on"; 
     
     // 3. Kaggle API ko request bhejna
     const response = await fetch(KAGGLE_API_URL, {
       method: 'POST',
-      body: formData
+      body: formData,
+      headers: {
+        'Bypass-Tunnel-Reminder': 'true'
+      }
     });
     
     if (!response.ok) {
